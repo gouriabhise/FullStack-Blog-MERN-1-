@@ -10,7 +10,8 @@ const BlogSchema=new mongoose.Schema({
 
     },
     content:{
-        type:String
+        type:Object,
+        required:true
     },
     coverImg:{
         type:String
@@ -19,7 +20,9 @@ const BlogSchema=new mongoose.Schema({
         type:String
     },
     author:{
-        type:String
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
+        required:true
     },
     rating:{
         type:Number

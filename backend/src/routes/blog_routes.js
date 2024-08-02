@@ -2,11 +2,14 @@ const express=require('express')
 const Blog=require('../model/blog_model')
 const Comment=require('../model/comment_model')
 const router=express.Router()
+const verifyToken=require('../middleware/verifyToken')
+const isAdmin = require('../middleware/isAdmin')
+
 //create a blog post
-router.post('/create-post',async(req,res)=>{
+router.post('/create-post',verifyToken,isAdmin,async(req,res)=>{
     try{
 console.log(req.body)
-const newPost=new Blog({...req.body})
+const newPost=new Blog({...req.body,author:req.userId})
 await newPost.save()
 res.status(201).send({
     message:'Post created successfully',
@@ -48,7 +51,7 @@ if(location){
     }
 }
 
- const post=await Blog.find(query).sort({createdAt:-1})
+ const post=await Blog.find(query).populate('author','email').sort({createdAt:-1})
  console.log('what is post',post)
 res.status(200).send({
     message:'All posts retrived successfully',
@@ -85,7 +88,7 @@ res.status(200).send({
 
 //update blog 
 
-router.patch("/update-post/:id",async(req,res)=>{
+router.patch("/update-post/:id",verifyToken,async(req,res)=>{
     try{
 const postId=req.params.id
 const updatePost=await Blog.findByIdAndUpdate(postId,{
@@ -106,7 +109,7 @@ res.status(200).send({
     }
 })
 
-router.delete("/:id",async(req,res)=>{
+router.delete("/:id",verifyToken,async(req,res)=>{
     try{
 const postId=req.params.id;
 const post=await Blog.findByIdAndDelete(postId)

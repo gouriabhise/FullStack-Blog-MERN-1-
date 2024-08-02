@@ -12,8 +12,11 @@ app.use(cors())
 //routes
 const blogRoutes=require('./src/routes/blog_routes')
 const commentRoutes=require('./src/routes/comment_routes')
+const userRoutes=require('./src/routes/auth_user_route')
+app.use("/api/auth",userRoutes)
 app.use("/api/blogs",blogRoutes)
 app.use("/api/comments",commentRoutes)
+
 async function main(){
     await mongoose.connect(process.env.MONGODB_URL)
     app.get('/',(req,res)=>{
