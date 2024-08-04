@@ -8,10 +8,13 @@ import {createApi,fetchBaseQuery} from '@reduxjs/toolkit/query/react'
     endpoints:(builder)=>({
         fetchBlogs:builder.query({
             query:({search='',category='',location=''})=>`/blogs?search=${search}&category=${category}&location=${location}`
+        }),
+        fetchBlogById:builder.query({
+            query:(id)=>`/blogs/${id}`
         })
     })
 
 })
 
 
- export const {useFetchBlogsQuery}=blogsApi
+ export const {useFetchBlogsQuery,useFetchBlogByIdQuery}=blogsApi
