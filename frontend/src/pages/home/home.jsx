@@ -1,5 +1,6 @@
 import React from "react";
 import Hero from "./Hero";
+import Blogs from "../blog/Blogs";
 
 const Home=()=>{
     return(
@@ -8,7 +9,7 @@ const Home=()=>{
             className="bg-white text-primary container mx-auto mt-8 p-8"
             >
  <Hero/>
-                 <div>blogs</div>
+               <Blogs/>
             </div>
         
     )

@@ -15,10 +15,12 @@ const Navbar = () => {
     <nav className="container mx-auto flex justify-between px-5">
  <ul className="sm:flex hidden item-center gap-8">
   {navLists.map((list,index)=>(
+    <li key={index}>
       <NavLink to={`${list.path}`}
       className={({isActive})=>isActive?"active":""}
       
       >{list.name}</NavLink>
+      </li>
 
   ))}
   <li>
@@ -42,7 +44,7 @@ const Navbar = () => {
       isMenuOpen &&(
         <ul className="fixed top-[108px] left-0 w-full h-auto pb-8 border-b bg-white shadow-sm z-50">
   {navLists.map((list,index)=>(
-    <li className="mt-5 px-4">
+    <li className="mt-5 px-4" key={index}>
       <NavLink to={`${list.path}`}
       onClick={()=>setIsMenuOpen(false)}
       className={({isActive})=>isActive?"active":""}
