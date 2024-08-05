@@ -5,6 +5,8 @@ import About from "../pages/miniPage/About"
 import Privacy from "../pages/miniPage/Privacy"
 import ContactUs from "../pages/miniPage/ContactUs"
 import SingleBlog from "../pages/blog/Singleblog/SingleBlog"
+import Register from "../pages/users/Register"
+import Login from "../pages/users/Login"
 
 const router=createBrowserRouter([
 {
@@ -30,6 +32,14 @@ const router=createBrowserRouter([
         {
             path:'blogs/:id',
             element:<SingleBlog/>
+        },
+        {
+            path:'/login',
+            element:<Login/>
+        },
+        {
+            path:'/register',
+            element:<Register/>
         }
     ]
 }
