@@ -51,12 +51,9 @@ if(location){
     }
 }
 
- const post=await Blog.find(query).populate('author','email').sort({createdAt:-1})
- console.log('what is post',post)
-res.status(200).send({
-    message:'All posts retrived successfully',
-    post:post
-})
+ const posts=await Blog.find(query).populate('author','email').sort({createdAt:-1})
+ console.log('what is post',posts)
+res.status(200).send(posts)
     }catch(error){
         console.error('Error getting posts',error)
         res.status(500).send({message:'Error getting posts'})
@@ -148,7 +145,7 @@ const relatedQuery={
     title:{$regex:titleRegex}
 }
 const relatedPost=await Blog.find(relatedQuery)
-res.status(200).send({message:'Related post found!',post:relatedPost})
+res.status(200).send(relatedPost)
     }catch(error){
         console.error('Error fetching related post',error)
         res.status(500).send({message:'Error fetching related  post'})
