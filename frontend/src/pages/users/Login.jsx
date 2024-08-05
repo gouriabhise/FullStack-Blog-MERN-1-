@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useLoginUserMutation } from '../../redux/features/Auth/authApi'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../../redux/features/Auth/authSlice'
 
 const Login = () => {
     const[email,setEmail]=useState('')
     const[password,setPassowrd]=useState('')
     const[message,setMessage]=useState('')
 const[loginUser,{isLoading:loginLoading}]=useLoginUserMutation()
+const dispatch=useDispatch()
 const navigate=useNavigate()  
 const handleLogin=async(e)=>{
 e.preventDefault()
@@ -19,6 +22,7 @@ try{
 const response=await loginUser(data).unwrap()
 console.log(response)
 const{token,user}=response
+dispatch(setUser({user}))
 alert("Login Successfull!")
 navigate('/')
 }catch(error){

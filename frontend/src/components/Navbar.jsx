@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import {IoClose, IoMenuSharp} from "react-icons/io5"
+import {useDispatch, useSelector} from 'react-redux'
+import avatarImg from '../assets/commentor.png'
+import {useLogoutUserMutation} from '../redux/features/Auth/authApi'
+import {logout} from '../redux/features/Auth/authSlice'
 const navLists=[
   {name:"Home",path:"/"},
   {name:"About us",path:"/about-us"},
@@ -9,7 +13,18 @@ const navLists=[
 ]
 const Navbar = () => {
   const[isMenuOpen,setIsMenuOpen]=useState()
+  const {user}=useSelector((state)=>state.auth)
   const toggleMenu=()=>setIsMenuOpen(!isMenuOpen)
+ const [logoutUser]=useLogoutUserMutation
+ const dispatch=useDispatch()
+  const handleLogout=async()=>{
+    try{
+await logoutUser().unwrap()
+dispatch(logout())
+    }catch(error){
+
+    }
+  }
   return (
    <header className="bg-slate-50 py-6 border">
     <nav className="container mx-auto flex justify-between px-5">
@@ -23,9 +38,23 @@ const Navbar = () => {
       </li>
 
   ))}
-  <li>
-    <NavLink to="/login">Login</NavLink>
-  </li>
+   {
+    user && user.role==='user'?(<li className="flex items-center gap-3">
+      <img src={avatarImg} alt="" className="size-8"/>
+   <button className="bg-[#1e73be] px-4 py-1.5 text-white rounded-sm"
+   onClick={handleLogout}
+   >Logout</button>
+    </li>):(<li>
+      <NavLink to="/login">Login</NavLink>
+    </li>)
+  }
+  {
+    user && user.role==='admin' &&(<li className="flex items-center gap-3">
+      <img src={avatarImg} alt="" className="size-8"/>
+   <Link to="/dashboard"><button className="bg-[#1e73be] px-4 py-1.5 text-white rounded-sm">Dashboard</button></Link>
+    </li>) 
+  }
+  
  </ul>
  <div className="flex items-center sm:hidden">
   <button 
